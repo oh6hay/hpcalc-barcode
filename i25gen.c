@@ -35,16 +35,14 @@ void encodePair(char a, char b, int xpos, SatAddr grob) {
   if (bidx < 0) bidx = 0;
   if (bidx > 9) bidx = 9;
   for (i=0 ; i<5 ; i++) {
+    drawVerticalLine(x++, 1, grob);
     if (digits[aidx][i]) { // thick black line
       drawVerticalLine(x++, 1, grob);
       drawVerticalLine(x++, 1, grob);
-    } else { // narrow black line
-      drawVerticalLine(x++, 1, grob);
     }
+    drawVerticalLine(x++, 0, grob);
     if (digits[bidx][i]) { // thick white line
       drawVerticalLine(x++, 0, grob);
-      drawVerticalLine(x++, 0, grob);
-    } else { // narrow white line
       drawVerticalLine(x++, 0, grob);
     }
   }
@@ -70,7 +68,7 @@ int main(void) {
     len--;
   }
 
-  totalWidth = len * 7 + 8;
+  totalWidth = len * 9 + 9;
   grob = makeGROB(16, totalWidth); // 2 terminating chars
 
   // start code
@@ -82,12 +80,13 @@ int main(void) {
   for (i=0 ; i < len ; i+=2) {
     a = msg[i];
     b = msg[i+1];
-    encodePair(a, b, 4 + i*7, grob);
+    encodePair(a, b, 4 + i*9, grob);
   }
 
   // end code
-  drawVerticalLine(totalWidth-4, 1, grob);
-  drawVerticalLine(totalWidth-3, 0, grob);
+  drawVerticalLine(totalWidth-5, 1, grob);
+  drawVerticalLine(totalWidth-4, 0, grob);
+  drawVerticalLine(totalWidth-3, 1, grob);
   drawVerticalLine(totalWidth-2, 1, grob);
   drawVerticalLine(totalWidth-1, 1, grob);
   
